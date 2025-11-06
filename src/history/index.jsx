@@ -1,11 +1,11 @@
 import { db } from '@/service/firebaseConfig';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ useNavigate instead of useNavigation
+// import { useNavigate } from 'react-router-dom'; // ✅ useNavigate instead of useNavigation
 import UserTripCardItem from './components/UserTripCardItem';
 
 function History() {
-  const navigate = useNavigate(); // ✅ correct hook
+  // const navigate = useNavigate(); // ✅ correct hook
   const [userTrips, setUserTrips] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,11 +14,17 @@ function History() {
   }, []);
 
   const GetUserTrips = async () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      navigate('/');
-      return;
-    }
+    // Simulate a guest user
+    const user = {
+      name: 'Guest User',
+      email: 'guest@example.com',
+      picture: '/cat.png'
+    };
+    // const user = JSON.parse(localStorage.getItem('user'));
+    // if (!user) {
+    //   navigate('/');
+    //   return;
+    // }
 
     try {
       const q = query(collection(db, 'AITrips'), where('userEmail', '==', user?.email));

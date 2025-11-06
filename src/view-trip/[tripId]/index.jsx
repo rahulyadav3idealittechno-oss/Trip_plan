@@ -1,11 +1,12 @@
 import { db } from '@/service/firebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import InfoSection from '../components/InfoSection';
 import Hotels from '../components/Hotels';
 import PlacesToVisit from '../components/PlacesToVisit';
+import Restaurants from '../components/Restaurants';
 import Footer from '../components/Footer';
 
 function ViewTrip() {
@@ -35,6 +36,7 @@ function ViewTrip() {
         <InfoSection trip={trip}/>
         <Hotels trip={trip}/>
         <PlacesToVisit trip={trip}/>
+        <Restaurants trip={trip}/>
         <Footer trip={trip}/>
     </div>
   )

@@ -1,71 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
-import { Link } from 'react-router-dom';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-<<<<<<< HEAD
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-=======
->>>>>>> a4cfcb93538eea0c77bfb8972f2ddb9b0e75d1cc
-import { FcGoogle } from "react-icons/fc";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FaPlaneDeparture } from 'react-icons/fa';
 import { HiOutlineClipboardList } from 'react-icons/hi';
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-} from "@/components/ui/dialog";
-import axios from 'axios';
 
 function Header() {
   const [user, setUser] = useState(null);
-<<<<<<< HEAD
-  const [openDailog, setOpenDailog] = useState(false);
-=======
-  const [openDialog, setOpenDialog] = useState(false);
->>>>>>> a4cfcb93538eea0c77bfb8972f2ddb9b0e75d1cc
-  const [loading, setLoading] = useState(false);
+  // const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    setUser(storedUser);
-<<<<<<< HEAD
-=======
-    console.log(storedUser);
->>>>>>> a4cfcb93538eea0c77bfb8972f2ddb9b0e75d1cc
+    // Simulate a logged-in user or set a default user
+    const defaultUser = {
+      name: 'Guest User',
+      picture: '/cat.png',
+      email: 'guest@example.com'
+    };
+    setUser(defaultUser);
+    // const storedUser = JSON.parse(localStorage.getItem('user'));
+    // setUser(storedUser);
+    // console.log(storedUser);
   }, []);
 
-  const login = useGoogleLogin({
-    onSuccess: (codeResp) => GetUserProfile(codeResp),
-<<<<<<< HEAD
-    onError: (error) => console.log(error)
-  });
+  // const login = useGoogleLogin({
+  //   onSuccess: (codeResp) => GetUserProfile(codeResp),
+  //   onError: (error) => console.log(error),
+  // });
 
-  const GetUserProfile = (tokenInfo) => {
-    axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
-      headers: {
-        Authorization: `Bearer ${tokenInfo?.access_token}`,
-        Accept: 'application/json',
-      },
-    }).then((resp) => {
-      localStorage.setItem('user', JSON.stringify(resp.data));
-      setOpenDailog(false);
-      window.location.reload();
-    });
-  };
+  // const GetUserProfile = (tokenInfo) => {
+  //   axios
+  //     .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${tokenInfo?.access_token}`,
+  //       Accept: 'application/json',
+  //     },
+  //   })
+  //   .then((resp) => {
+  //     console.log(resp);
+  //     localStorage.setItem('user', JSON.stringify(resp.data));
+  //     setOpenDialog(false);
+  //     window.location.reload();
+  //   });
+  // };
 
   return (
     <header className='sticky top-0 z-50 border-b backdrop-blur-sm bg-white/50'>
       <div className='flex items-center justify-between w-full px-4 py-3 mx-auto max-w-7xl'>
         <a href="/" className="flex items-center">
-          <img src="/logo.png" width={48} height={48} alt="WanderWise Logo" className="object-contain rounded-full" />
-          <span className="text-xl font-bold tracking-wide text-[#1f2937]"> WANDERWISE</span>
+          <img src="/logo.png" width={96} height={96} alt="Ideal Logo" className="object-contain rounded-full" />
+          <span className="text-xl font-bold tracking-wide text-[#1f2937]">  Ideal Trip</span>
         </a>
 
         {/* Desktop Navigation */}
@@ -75,28 +63,27 @@ function Header() {
               <a href="/create-trip">
                 <Button variant="outline" className="px-4 py-2 text-sm rounded-full">Create Trip</Button>
               </a>
+              <a href="/explore">
+                <Button variant="outline" className="px-4 py-2 text-sm rounded-full">Explore</Button>
+              </a>
               <a href="/history">
                 <Button variant="outline" className="px-4 py-2 text-sm rounded-full">History</Button>
+              </a>
+              <a href="/chatbot">
+                <Button variant="outline" className="px-4 py-2 text-sm rounded-full">Chatbot</Button>
               </a>
               <Popover>
                 <PopoverTrigger>
                   <img
-                    src={user?.picture || "/cat.png"}
+                    src="/rahul.jpeg"
                     alt={user?.name || "User"}
                     className="object-cover w-10 h-10 border rounded-full shadow-sm"
                     referrerPolicy="no-referrer"
                   />
                 </PopoverTrigger>
                 <PopoverContent className="w-32 text-center cursor-pointer">
-                  <h2
-                    className='text-sm font-medium transition hover:text-red-600'
-                    onClick={() => {
-                      googleLogout();
-                      localStorage.clear();
-                      window.location.reload();
-                    }}
-                  >
-                    Logout
+                  <h2 className='text-sm font-medium'>
+                    {user?.name}
                   </h2>
                 </PopoverContent>
               </Popover>
@@ -104,9 +91,9 @@ function Header() {
           ) : (
             <Button
               className='bg-blue-700 hover:bg-[#1e5c9d] text-white px-5 py-2 rounded-full text-sm font-medium'
-              onClick={() => setOpenDailog(true)}
+              onClick={() => alert('You are already logged in as Guest User')}
             >
-              Sign In
+              Guest User
             </Button>
           )}
         </div>
@@ -129,34 +116,35 @@ function Header() {
                         Create Trip
                       </Button>
                     </a>
+                    <a href="/explore">
+                      <Button variant="outline" className="flex items-center w-full gap-3 text-black rounded-full">
+                        <HiOutlineClipboardList className="w-5 h-5 text-black" />
+                        Explore
+                      </Button>
+                    </a>
                     <a href="/history">
                       <Button variant="outline" className="flex items-center w-full gap-3 text-black rounded-full">
                         <HiOutlineClipboardList className="w-5 h-5 text-black" />
                         History
                       </Button>
                     </a>
+                    <a href="/chatbot">
+                      <Button variant="outline" className="flex items-center w-full gap-3 text-black rounded-full">
+                        <HiOutlineClipboardList className="w-5 h-5 text-black" />
+                        Chatbot
+                      </Button>
+                    </a>
                     <div className='flex items-center gap-3 mt-4'>
                       <img
-                        src={user?.picture || "/cat.png"}
+                        src="/rahul.jpeg"
                         alt="User"
                         className="w-10 h-10 border rounded-full"
                       />
                       <div className="text-sm font-medium">{user?.name}</div>
                     </div>
-                    <Button
-                      variant="destructive"
-                      className="mt-4 rounded-full"
-                      onClick={() => {
-                        googleLogout();
-                        localStorage.clear();
-                        window.location.reload();
-                      }}
-                    >
-                      Logout
-                    </Button>
                   </>
                 ) : (
-                  <Button className="mt-4 text-black bg-white border rounded-full" onClick={() => setOpenDailog(true)}>Sign In</Button>
+                  <Button className="mt-4 text-black bg-white border rounded-full" onClick={() => alert('You are already logged in as Guest User')}>Guest User</Button>
                 )}
               </div>
             </SheetContent>
@@ -164,7 +152,7 @@ function Header() {
         </div>
       </div>
 
-      <Dialog open={openDailog}>
+      {/* <Dialog open={openDialog}>
         <DialogContent className="w-[90%] max-w-sm sm:max-w-md rounded-md">
           <DialogHeader>
             <DialogDescription>
@@ -175,7 +163,6 @@ function Header() {
                   Securely log in using your Google account
                 </p>
                 <Button
-                  disabled={loading}
                   onClick={login}
                   className="flex items-center justify-center w-full gap-3 mt-6 text-black bg-white border shadow-sm hover:bg-gray-100"
                 >
@@ -183,91 +170,10 @@ function Header() {
                   <span className="text-sm font-medium">Sign in with Google</span>
                 </Button>
               </div>
-=======
-    onError: (error) => console.log(error),
-  });
-
-  const GetUserProfile = (tokenInfo) => {
-    axios
-      .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
-        headers: {
-          Authorization: `Bearer ${tokenInfo?.access_token}`,
-          Accept: 'application/json',
-        },
-      })
-      .then((resp) => {
-        console.log(resp);
-        localStorage.setItem('user', JSON.stringify(resp.data));
-        setOpenDialog(false);
-        window.location.reload();
-      });
-  };
-
-  return (
-    <div className="flex items-center justify-between p-3 px-5 shadow-sm">
-      <img src="/logo.png" width={200} alt="Logo" />
-      <div>
-        {user ? (
-          <div className="flex items-center gap-5">
-            {/* Use Link for navigation */}
-            <a href="/create-trip">
-              <Button variant="outline" className="text-black rounded-full">Create Trip</Button>
-            </a>
-            <a href="/history">
-              <Button variant="outline" className="text-black rounded-full">History</Button>
-           </a> 
-            <Popover>
-              <PopoverTrigger>
-                <img
-                  src={user?.picture || "/cat.png"}
-                  alt={user?.name || "UserName"}
-                  className="w-10 h-10 rounded-full"
-                  referrerPolicy="no-referrer"
-                />
-              </PopoverTrigger>
-              <PopoverContent>
-                <h2
-                  className="cursor-pointer"
-                  onClick={() => {
-                    googleLogout();
-                    localStorage.clear();
-                    window.location.reload();
-                  }}
-                >
-                  Logout
-                </h2>
-              </PopoverContent>
-            </Popover>
-          </div>
-        ) : (
-          <Button
-            className="bg-[#2e79d5] text-white hover:bg-[#1e5c9d]"
-            onClick={() => setOpenDialog(true)}
-          >
-            Sign In
-          </Button>
-        )}
-      </div>
-      <Dialog open={openDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogDescription>
-              <img src="/logo.png" width={200} />
-              <h2 className="text-lg font-bold mt-7">Sign In With Google</h2>
-              <p>Sign in to the App with Google authentication securely</p>
-              <Button
-                disabled={loading}
-                onClick={login}
-                className="flex items-center w-full gap-4 mt-5"
-              >
-                <FcGoogle className="h-9 w-9" />
-                Sign In With Google
-              </Button>
->>>>>>> a4cfcb93538eea0c77bfb8972f2ddb9b0e75d1cc
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </header>
   );
 }
